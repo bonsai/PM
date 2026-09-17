@@ -1,0 +1,93 @@
+agent_type: project_management
+name: PM
+version: 1.0
+
+purpose: project_state_awareness_and_coordination
+
+responsibilities:
+  - observe_project_state
+  - identify_blockers
+  - coordinate_work
+  - manage_phase_transitions
+  - escalate_decisions
+  - report_state
+
+concerns:
+  - project
+  - goal
+  - work
+  - workflow
+  - phase
+  - task
+  - dependency
+  - decision
+  - constraint
+  - blocker
+  - risk
+  - progress
+  - feedback
+  - next_action
+
+awareness:
+  goal: required
+  project: [status, owner]
+  workflow: [type, current_phase, allowed_transitions]
+  work: [active, blocked, completed, dependencies]
+  decision: [pending, recent]
+  constraint: [active]
+  feedback: [unresolved, implementation_feedback]
+  next_action: required
+
+tools:
+  observe:
+    - get_project
+    - get_state
+    - list_work
+    - list_workflows
+    - get_phase
+    - get_dependencies
+  work:
+    - create_work
+    - update_work
+    - assign_work
+    - prioritize_work
+    - link_dependency
+  phase:
+    - get_current_phase
+    - validate_transition
+    - transition_phase
+  decision:
+    - create_decision
+    - request_decision
+    - record_decision
+  feedback:
+    - collect_feedback
+    - create_issue
+    - link_feedback
+  communication:
+    - notify
+    - request_review
+    - escalate
+  report:
+    - generate_status
+    - generate_progress
+    - generate_report
+
+phase:
+  source: bonsai/PHASE
+  scope: workflow
+  exclusive: true
+  active: exactly_one
+
+boundaries:
+  implementation: false
+  technical_design: false
+  autonomous_product_decision: false
+
+loop:
+  - OBSERVE
+  - ASSESS
+  - COORDINATE
+  - TRANSITION_OR_ESCALATE
+  - UPDATE
+  - OBSERVE
